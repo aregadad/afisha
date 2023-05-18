@@ -6,7 +6,7 @@ from django.urls import reverse
 
 
 def show_index(request):
-    geo = {
+    places_geo = {
         'type': 'FeatureCollection',
         'features':
         [
@@ -15,18 +15,18 @@ def show_index(request):
                 'geometry':
                 {
                     'type': 'Point',
-                    'coordinates': [place.lng_coord, place.lat_coord]
+                    'coordinates': [place.lng, place.lat]
                 },
                 'properties':
                 {
                     'title': place.title,
-                    'placeId': place.place_id,
+                    'placeId': place.custom_id,
                     'detailsUrl': reverse(show_place, args=[place.id])
                 }
             } for place in Place.objects.all()
         ]
     }
-    context = {'geo': geo}
+    context = {'places_geo': places_geo}
     return render(request, 'index.html', context)
 
 
@@ -39,8 +39,8 @@ def show_place(request, place_id):
         'description_long': place.description_long,
         'coordinates':
         {
-            'lng': place.lng_coord,
-            'lat': place.lat_coord
+            'lng': place.lng,
+            'lat': place.lat
         }
     }
     return JsonResponse(content, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 2})
