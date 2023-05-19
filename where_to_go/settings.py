@@ -90,7 +90,7 @@ USE_TZ = True
 
 STATIC_URL = env('STATIC_URL', default='static/')
 
-STATIC_ROOT = env('STATIC_ROOT', default='static')
+STATIC_ROOT = BASE_DIR / env('STATIC_ROOT', default='static')
 
 MEDIA_URL = env('MEDIA_URL', default='media/')
 
