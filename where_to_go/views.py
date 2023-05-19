@@ -20,7 +20,7 @@ def show_index(request):
                 'properties':
                 {
                     'title': place.title,
-                    'placeId': place.custom_id,
+                    'placeId': place.id,
                     'detailsUrl': reverse(show_place, args=[place.id])
                 }
             } for place in Place.objects.all()
