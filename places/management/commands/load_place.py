@@ -2,6 +2,8 @@ from django.core.management.base import BaseCommand
 import requests
 from places.models import Place, Image
 from django.core.files.base import ContentFile
+from urllib.parse import urlparse
+import os
 
 
 class Command(BaseCommand):
@@ -30,8 +32,9 @@ class Command(BaseCommand):
                 position=index,
                 place=place
             )
+            image_extension = os.path.splitext(urlparse(image_url).path)[1]
             if image_created:
-                image.image.save(f'{place.id}_{index}',
+                image.image.save(f'{place.id}_{index}{image_extension}',
                                  image_content, save=True)
 
     def add_arguments(self, parser):
