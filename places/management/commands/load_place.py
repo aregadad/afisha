@@ -17,10 +17,12 @@ class Command(BaseCommand):
         place_payload = place_response.json()
         place, place_created = Place.objects.get_or_create(
             title=place_payload['title'],
-            description_short=place_payload['description_short'],
-            description_long=place_payload['description_long'],
             lng=place_payload['coordinates']['lng'],
             lat=place_payload['coordinates']['lat'],
+            defaults={
+                'description_short': place_payload.get('description_short', ''),
+                'description_long': place_payload.get('description_long', ''),
+            },
         )
         if not place_created:
             return
