@@ -66,18 +66,10 @@ DATABASES = {
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 LANGUAGE_CODE = 'ru-ru'
@@ -94,6 +86,6 @@ STATIC_ROOT = BASE_DIR / env('STATIC_ROOT', default='static')
 
 MEDIA_URL = env('MEDIA_URL', default='media/')
 
-MEDIA_ROOT =  BASE_DIR / env('MEDIA_ROOT', default='media')
+MEDIA_ROOT = BASE_DIR / env('MEDIA_ROOT', default='media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

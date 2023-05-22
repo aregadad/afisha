@@ -20,7 +20,7 @@ class Command(BaseCommand):
             description_short=place_payload['description_short'],
             description_long=place_payload['description_long'],
             lng=place_payload['coordinates']['lng'],
-            lat=place_payload['coordinates']['lat']
+            lat=place_payload['coordinates']['lat'],
         )
         if not place_created:
             return
@@ -30,12 +30,15 @@ class Command(BaseCommand):
             image_content = ContentFile(image_response.content)
             image, image_created = Image.objects.get_or_create(
                 position=index,
-                place=place
+                place=place,
             )
             image_extension = os.path.splitext(urlparse(image_url).path)[1]
             if image_created:
-                image.image.save(f'{place.id}_{index}{image_extension}',
-                                 image_content, save=True)
+                image.image.save(
+                    name=f'{place.id}_{index}{image_extension}',
+                    content=image_content,
+                    save=True,
+                )
 
     def add_arguments(self, parser):
         parser.add_argument('url', action='store', help='Link to .json')

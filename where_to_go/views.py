@@ -6,25 +6,23 @@ from django.urls import reverse
 
 
 def show_index(request):
+    places_features = [
+        {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [place.lng, place.lat],
+            },
+            'properties': {
+                'title': place.title,
+                'placeId': place.id,
+                'detailsUrl': reverse(show_place, args=[place.id]),
+            },
+        } for place in Place.objects.all()
+    ]
     places_geo = {
         'type': 'FeatureCollection',
-        'features':
-        [
-            {
-                'type': 'Feature',
-                'geometry':
-                {
-                    'type': 'Point',
-                    'coordinates': [place.lng, place.lat]
-                },
-                'properties':
-                {
-                    'title': place.title,
-                    'placeId': place.id,
-                    'detailsUrl': reverse(show_place, args=[place.id])
-                }
-            } for place in Place.objects.all()
-        ]
+        'features': places_features,
     }
     context = {'places_geo': places_geo}
     return render(request, 'index.html', context)
@@ -37,10 +35,11 @@ def show_place(request, place_id):
         'imgs': [image.image.url for image in place.images.all()],
         'description_short': place.description_short,
         'description_long': place.description_long,
-        'coordinates':
-        {
-            'lng': place.lng,
-            'lat': place.lat
-        }
+        'coordinates': {'lng': place.lng, 'lat': place.lat},
     }
-    return JsonResponse(content, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 2})
+
+    return JsonResponse(
+        data=content,
+        safe=False,
+        json_dumps_params={'ensure_ascii': False, 'indent': 2},
+    )
