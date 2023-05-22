@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not options['url']:
             return
+
         place_response = requests.get(options['url'])
         place_response.raise_for_status()
         place_payload = place_response.json()
@@ -24,6 +25,7 @@ class Command(BaseCommand):
                 'description_long': place_payload.get('description_long', ''),
             },
         )
+
         if not place_created:
             return
         for index, image_url in enumerate(place_payload['imgs'], 1):
