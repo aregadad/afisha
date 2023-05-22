@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ```
 
 ## Переменные окружения
-- SECRET_KEY=REPLACE_ME
+- SECRET_KEY
 - DEBUG=True
 - ALLOWED_HOSTS=localhost,127.0.0.1
 - DB_ENGINE
