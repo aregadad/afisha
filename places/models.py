@@ -38,7 +38,7 @@ class Image(models.Model):
         ordering = ('position', )
         verbose_name = 'Картинка'
         verbose_name_plural = 'Картинки'
-        unique_together = (('image', 'place'), ('place', 'position'))
+        unique_together = ('image', 'place')
 
     def __str__(self):
         return f'#{self.position} {self.place}'
