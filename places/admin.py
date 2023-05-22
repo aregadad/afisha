@@ -5,8 +5,8 @@ from adminsortable2.admin import SortableStackedInline, SortableAdminBase
 
 
 class ImageInline(SortableStackedInline):
-    def get_preview(self, obj):
-        return format_html('<img src="{}" height=200px>', obj.image.url)
+    def get_preview(self, image):
+        return format_html('<img src="{}" height=200px>', image.image.url)
 
     model = Image
     readonly_fields = ('get_preview', )
