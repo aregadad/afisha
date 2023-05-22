@@ -29,18 +29,14 @@ class Command(BaseCommand):
         for index, image_url in enumerate(place_payload['imgs'], 1):
             image_response = requests.get(image_url)
             image_response.raise_for_status()
-            image_content = ContentFile(image_response.content)
-            image, image_created = Image.objects.get_or_create(
+            image_extension = os.path.splitext(urlparse(image_url).path)[1]
+            image_name = f'{place.id}_{index}{image_extension}'
+            image_content = ContentFile(image_response.content, image_name)
+            Image.objects.create(
+                image=image_content,
                 position=index,
                 place=place,
             )
-            image_extension = os.path.splitext(urlparse(image_url).path)[1]
-            if image_created:
-                image.image.save(
-                    name=f'{place.id}_{index}{image_extension}',
-                    content=image_content,
-                    save=True,
-                )
 
     def add_arguments(self, parser):
         parser.add_argument('url', action='store', help='Link to .json')
